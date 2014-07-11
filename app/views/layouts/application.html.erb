@@ -6,19 +6,37 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
+
 <body>
-
-<div class="nav">
-<h1><%= link_to "DOTO", root_path %> </h1>
-<h2><%= link_to "Todo Lists", todo_lists_path %> </h2>
- 
-<% flash.each do |type, message| %>
-	<div class="alert flash <%= type %>" >
-		<%= message %>
-	</div>
-<% end %>
 	
-<%= yield %>
+	<div class="navbar-static-top">
+		    <div class="navbar navbar-inverse">
+		    	<div class="navbar-inner">
+		    	<div class="container">
+		    		<%= link_to "DOTO", root_path, :class => "brand" %>  
+			    	<ul class="nav">
+				    	<li><%= link_to "Todo Lists", todo_lists_path %></li>
+				    	<li><%= link_to 'New Todo list', new_todo_list_path %></li>
+			   		 </ul>
+		    	</div>
+    		</div> 
 
+		<div class="container">
+		<% if notice %>
+		  <div class="alert alert-success">
+
+			  <%= notice %>
+		  </div>
+		<% end %>
+
+		<% if alert %>
+		  <div class="alert alert-error">
+
+		  	<%= alert %>
+		  </div>
+		<% end %>
+		
+		<%= yield %>
+	</div>
 </body>
 </html>

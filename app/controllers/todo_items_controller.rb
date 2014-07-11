@@ -1,6 +1,9 @@
 class TodoItemsController < ApplicationController
   before_action :find_todo_list
 
+  http_basic_authenticate_with name: "nik", password: "sethi", except: [:index, :show]
+
+
   def index
   end
 

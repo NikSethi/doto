@@ -1,12 +1,33 @@
-<p>
-  <strong>Title:</strong>
+<h1>
   <%= @todo_list.title %>
-</p>
+</h1>
 
-<p>
-  <strong>Description:</strong>
-  <%= @todo_list.description %>
-</p>
+<h3>
+   <%= @todo_list.description %>
+</h3>
+
+<h4>Incomplete Items: </h4>
+<% if @todo_list.has_incomplete_items? %>
+<ul>
+	<% @todo_list.todo_items.incomplete.each do |todo_item| %>
+		<%= link_to image_tag("http://uxrepo.com/static/icon-sets/font-awesome/svg/circle-empty.svg", size:"15x15", alt: "Mark Complete"), complete_todo_list_todo_item_path(@todo_list, todo_item), method: :patch %> <%= todo_item.content %>
+		<br>
+	<% end %>
+
+</ul>
+<% end %>
+
+<h4>Complete Items: </h4>
+<% if @todo_list.has_completed_items? %>
+<ul>
+	<% @todo_list.todo_items.complete.each do |todo_item| %>
+		<%= image_tag "http://uxrepo.com/static/icon-sets/font-awesome/svg/circle.svg", size:"15x15" %><%= todo_item.content %>
+		<br>
+	<% end %>
+
+</ul>
+<% end %>
 
 <%= link_to 'Edit', edit_todo_list_path(@todo_list) %> |
-<%= link_to 'Back', todo_lists_path %>
+<%= link_to 'Back', todo_lists_path %> |
+<%= link_to 'List Items', todo_list_todo_items_path(@todo_list) %>

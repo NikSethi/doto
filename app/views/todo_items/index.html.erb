@@ -3,15 +3,30 @@
 
 
 <ul class="todo_items">
-	<% @todo_list.todo_items.each do |todo_item| %>
-		<li id="<%= dom_id(todo_item) %>"><%= todo_item.content %> 
-		<%= link_to "Mark Complete", complete_todo_list_todo_item_path(todo_item), method: :patch %>
-		<%= link_to "Edit", edit_todo_list_todo_item_path(@todo_list, todo_item) %>
-		<%= link_to "Delete", todo_list_todo_item_path(todo_item), method: :delete, data: {confirm: "Are you sure?"} %>
-		</li>
+	<% @todo_list.todo_items.reverse_each do |todo_item| %>
+		<div class="todo_item" >
+			<div id="<%= dom_id(todo_item) %>">
+				<% if todo_item.completed? %>
+					<%= image_tag "http://uxrepo.com/static/icon-sets/font-awesome/svg/circle.svg", size:"15x15" %>
+					<%= todo_item.content %> 
+				<% else %>
+					<%= link_to image_tag("http://uxrepo.com/static/icon-sets/font-awesome/svg/circle-empty.svg", size:"15x15", alt: "Mark Complete"), complete_todo_list_todo_item_path(todo_item), method: :patch %>
+					<%= todo_item.content %> 
+				<% end %>
 
+				<br>
+					<span class="controls">
+						<% if todo_item.completed? %>
+							<%= todo_item.completed_at.time.to_formatted_s(:long) %>
+						<% end %>
+						<%= link_to "Edit", edit_todo_list_todo_item_path(@todo_list, todo_item) %>
+						<%= link_to "Delete", todo_list_todo_item_path(todo_item), method: :delete, data: {confirm: "Are you sure?"} %>
+					</span>
+			</div>
+		</div>
 	<% end %>
 </ul>
 
 
-<p> <%= link_to "New Todo Item", new_todo_list_todo_item_path %> </p>
+<p> <%= link_to "New Todo Item", new_todo_list_todo_item_path %> |
+<%= link_to 'Back', todo_lists_path %> </p>
